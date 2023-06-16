@@ -1,0 +1,2 @@
+pywebview
+pywin32

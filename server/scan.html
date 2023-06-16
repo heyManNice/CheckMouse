@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <script>
+        request={
+        post: function (route, json) {
+            let xhr = new XMLHttpRequest();
+            xhr.addEventListener("readystatechange", function () {
+                if (this.readyState === 4) {
+                    let newJson;
+                    try{
+                        newJson = JSON.parse(this.responseText);
+                    }catch{
+                        warn.show({msg:"未知错误，请联系管理员",ms:3000})
+                        return
+                    }
+                    if (newJson['callback']) {
+                        for(let i=0;i<newJson['callback'].length;i++){
+                            eval(newJson['callback'][i])(newJson);
+                        }
+                    }
+                }
+            });
+            xhr.open("POST", "./api/" + route);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.send(JSON.stringify(json));
+        },
+        get: function (route) {
+            var xhr = new XMLHttpRequest();
+            xhr.addEventListener("readystatechange", function () {
+                if (this.readyState === 4) {
+                    console.log(this.responseText);
+                    if(this.responseText=="ok"){
+                        document.querySelector(".login_ok").style.display="block";
+                        document.querySelector(".need_scan").style.display="none";
+                    }
+                }
+            });
+            xhr.open("GET", "./api/" + route);
+            xhr.send();
+        },
+    }
+    </script>
+    <title> </title>
+    <style>
+        body{
+            padding: 10px 10px;
+        }
+        p{
+            font-size: 20px;
+        }
+        hr{
+            background-color: rgb(246, 246, 246);
+            border: 0.5px solid rgb(234, 234, 234);
+        }
+        .list{
+            display: flex;
+        }
+        .list_1{
+            flex: 0;
+            width: 60px;
+            border-radius: 5px;
+        }
+        .list_2{
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 5px;
+        }
+        .list_2_1{
+            flex: 1;
+            padding: 14px 5px 0px 0px;
+            justify-content: center;
+            font-size: 20px;
+        }
+        .list_3{
+            flex: 0;
+            display: block;
+            padding: 20px;
+            color: #07C160;
+        }
+        .list_3_1{
+            flex: 0;
+            display: block;
+            padding: 20px;
+            color: #cfcfcf;
+            transform: scaleY(3);
+        }
+        .nic{
+            font-size: 20px;
+        }
+        .nict{
+            color: #bebebe;
+        }
+        .btn{
+            left: 0;
+            right: 0;
+            margin: auto;
+            width: fit-content;
+        }
+        button{
+            width: 170px;
+            height: 50px;
+            margin: 10px 0px;
+            font-size: 18px;
+            border-radius: 6px;
+            border: none;
+            outline: none;
+        }
+        .ok{
+            background-color: #07C160;
+            color: #FFFFFF;
+            margin-top: 70px;
+        }
+        .no{
+            color: #12B05B;
+            background-color: #F2F2F2;
+        }
+        .mylogo{
+            width: 20px;
+            position: relative;
+            top: 5px;
+        }
+        .login_ok{
+            position: fixed;
+            top: 200px;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+            width: 300px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <img class="login_ok" src="./img/login_ok.png">
+    <div class="need_scan">
+        <p><img class="mylogo" src="./img/ikun.png" alt="logo"> <b>检鼠</b> 申请使用</p>
+        <p style="font-size: 30px;">获取你的昵称、头像</p>
+        <p style="font-size: 15px;color: #B3B3B3;">你可以选择不同的昵称、头像登录</p>
+        <hr>
+        <div class="list">
+            <img class="list_1" src="./img/user.jpg" alt="头像">
+            <div class="list_2">
+                <div class="nic">微信昵称</div>
+                <div class="nict">微信昵称头像</div>
+            </div>
+            <div class="list_3">
+                ✔
+            </div>
+        </div>
+        <hr>
+        <div class="list">
+            <img class="list_1" src="./img/add.png" alt="加">
+            <div class="list_2_1">
+                新建昵称头像
+            </div>
+            <div class="list_3_1">
+                >
+            </div>
+        </div>
+        <hr>
+        <div class="btn">
+            <button onclick="login()" class="ok">允许</button><br>
+            <button class="no">拒绝</button>
+        </div>
+    </div>
+</body>
+<script>
+    function login(){
+        request.get("login");
+    }
+</script>
+</html>

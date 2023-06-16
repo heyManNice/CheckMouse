@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <span class="loadmsg">加载中...</span>
+    <span class="ourname">©2023-2023 Python <span id="mygroup_name">加载中</span>小组 版权所有</span>
+    <img class="png" src="./bootPng.png">
+    <video autoplay class="mp4" src="./boot.mp4"></video>
+    <div class="background"></div>
+</body>
+<script>
+    function sleep(ms){
+        return new Promise(( resolve, reject ) => {
+            setTimeout(function(){
+                resolve(ms);
+            },ms)
+        });
+    }
+
+    window.onload=async function(){
+        let em = document.querySelector(".loadmsg");
+        await sleep(100);
+        let myname = await window.pywebview.api.get_name();
+        document.querySelector("#mygroup_name").innerHTML=myname;
+        await sleep(1000);
+        em.innerHTML="正在检测网络连接...";
+        await sleep(200);
+        em.innerHTML="正在加载数据...";
+        await sleep(500);
+        em.innerHTML="正在加载配置文件...";
+        await sleep(40);
+        em.innerHTML="正在加载用户设置...";
+        await sleep(40);
+        em.innerHTML="正在加载用户数据...";
+        await sleep(40);
+        em.innerHTML="正在加载鼠标驱动程序...";
+        await sleep(40);
+        em.innerHTML="正在拖延时间...";
+        await sleep(40);
+        em.innerHTML="正在初始化面板...";
+        await sleep(40);
+        em.innerHTML="正在检测鼠标事件...";
+        await sleep(40);
+        em.innerHTML="正在检测键盘事件...";
+        await sleep(200);
+        em.innerHTML="正在等待响应...";
+        await sleep(500);
+        em.innerHTML="正在准备UI界面...";
+        await sleep(100);
+        em.innerHTML="正在准备通信程序...";
+        await sleep(40);
+        em.innerHTML="正在准备好康的...";
+        await sleep(40);
+        em.innerHTML="正在预加载什么也没有...";
+        await sleep(40);
+        em.innerHTML="正在准备通信程序...";
+        await sleep(40);
+        em.innerHTML="正在加载程序...";
+        await sleep(40);
+        em.innerHTML="正在等待程序响应...";
+        await sleep(40);
+        em.innerHTML="正在完成配置文件...";
+        await sleep(500);
+        em.innerHTML="正在完成用户设置...";
+        await sleep(20);
+        em.innerHTML="正在完成用户数据...";
+        await sleep(40);
+        em.innerHTML="正在初始化...";
+        await sleep(1000);
+        em.innerHTML="初始化完成!";
+        await sleep(500);
+        window.pywebview.api.finish();
+    }
+</script>
+<style>
+.loadmsg{
+    font-size: 15px;
+    left: 206px;
+    top: 330px;
+    position: fixed;
+    color: #67D2CB;
+    z-index: 4;
+}
+.ourname{
+    font-size: 15px;
+    right: 210px;
+    bottom: 210px;
+    position: fixed;
+    color: #67D2CB;
+    z-index: 4;
+}
+.png{
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    position: fixed;
+    width: 100vw;
+    z-index: 3;
+}
+.background{
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    position: fixed;
+    width: 57vw;
+    height: 57vw;
+    z-index: 0;
+    background-color: #31847E;
+}
+.mp4{
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    position: fixed;
+    width: 57vw;
+    z-index: 1;
+}
+</style>
+</html>

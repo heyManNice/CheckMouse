@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            padding: 0px;
+            margin: 0px;
+            box-sizing: border-box;
+        }
+        body{
+            overflow: hidden;
+        }
+        .text{
+            position: absolute;
+            top:0px;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            position: absolute;
+            font-size: 14px;
+        }
+        .btn{
+            font-size: 10px;
+            position: absolute;
+            bottom: 0px;
+            background-color: #F0F0F0;
+            padding: 10px;
+            width: 100%;
+            text-align: right;
+            box-shadow: 0px 1px 1px inset #d3d3d3;
+        }
+        button{
+            padding: 4px 17px;
+            border: 1px solid #B8B8B8;
+            border-radius: 0px;
+            background-color: #E1E1E1;
+            outline: 0px solid #0078D7;
+        }
+        button:active{
+            outline: 1px solid #0078D7;
+            border: 1px solid #0078D7;
+        }
+        button:hover{
+            border: 1px solid #0078D7;
+            background-color:#E5F1FB;
+        }
+        img{
+            height: 50px;
+            margin: 10px;
+        }
+        .bar{
+            background-color: #10B02F;
+            height: 20px;
+            width: 219px;
+            animation: bargo 3s 1 linear;
+        }
+        @keyframes bargo{
+            from{
+                width: 0px;
+            }
+            to{
+                width: 219px;
+            }
+        }
+        #updata{
+            position: fixed;
+            top: 20px;
+            left: 40px;
+            display: none;
+        }
+        #updatatext{
+            margin-left: 60px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="q" class="text">
+        <img src="./ikun.png" alt="提示">
+        <span id="content">发现新版本，需要进行更新吗？</span>
+    </div>
+    <div id="btn" id="mov" onmousedown="set(event)" onmouseup="unset()" class="btn">
+        <button onclick="yes()">确定(Y)</button>
+        <button onclick="yes()">不取消(Y)</button>
+    </div>
+    <div id="updata">
+        <div id="updatatext">
+            正在更新中....
+        </div>
+        <div class="bar">
+
+        </div>
+    </div>
+</body>
+<script>
+    function yes(){
+        document.querySelector("#q").style.display="none";
+        document.querySelector("#btn").style.display="none";
+        document.querySelector("#updata").style.display="block";
+        setTimeout(function(){
+            window.pywebview.api.yes();
+        },4000);
+    }
+    function no(){
+        window.pywebview.api.no();
+    }
+    function main(msg){
+        document.querySelector("#content").innerHTML=msg;
+    }
+</script>
+</html>

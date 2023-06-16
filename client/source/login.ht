@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录</title>
+    <style>
+        #logo h1{
+            text-align: center;
+        }
+        #logo{
+            /* display: none; */
+        }
+        body{
+            padding: 60px 40px;
+        }
+        .sanc_code{
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+            width: fit-content;
+            height: fit-content;
+            transform: scale(0.8);
+            display: none;
+        }
+        .scan_wechat{
+            width: 20px;
+            position: relative;
+            top: 4px;
+        }
+        .scan_win{
+            top: 70px;
+            width: fit-content;
+            position: absolute;
+            left: 0;
+            right: 0;
+            margin: auto;
+            display: none;
+        }
+        .scan_ok{
+            width: 90%;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+            display: none;
+        }
+        .scan_win h1{
+            text-align: center;
+            font-size: 25px;
+        }
+        .login{
+            /* display: none; */
+        }
+        .regi{
+            display: none;
+        }
+        input{
+            margin: 5px 10px;
+            width: 260px;
+            height: 30px;
+            outline: none;
+            box-sizing: border-box;
+        }
+        .ver{
+            width: 118px !important;
+            margin-right: 6px;
+        }
+        .getver{
+            width: 118px !important;
+            margin-left: 6px;
+        }
+        input[type="button"]{
+            background-color: #03A9F4;
+            color: #FBFBFC;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 300ms;
+        }
+        input[type="button"]:hover{
+            background-color: #0097dd;
+        }
+        .repasstitle{
+            display: none;
+        }
+        .repass{
+            display: none;
+        }
+        .Veri_code{
+            display: none;
+            position: fixed;
+            background-color: rgb(255, 255, 255);
+            flex-direction: column;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            margin: auto;
+            width: 320px;
+            height: fit-content;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0,0.3);
+            animation: confirm_appear 300ms 1;
+        }
+        .Veri_code_pic{
+            flex: 1;
+            padding: 5px;
+        }
+        .Veri_code_title p{
+            font-size: 30px;
+            margin: 0;
+        }
+        .Veri_code_title span{
+            font-size: 10px;
+        }
+        .Veri_code_title{
+            padding: 10px 20px;
+            background-color: #4791E3;
+            flex: 0;
+            height: 100px;
+            color: white;
+        }
+        .Veri_code_btn{
+            flex: 0;
+            height: 100px;
+            display: flex;
+            padding: 0px 5px 5px 5px;
+            align-items: center;
+        }
+        .Veri_code_pic img{
+            cursor: pointer;
+            width: 100px;
+            height: 100px;
+            transition: all 300ms;
+            animation: confirm_appear 300ms 1;
+        }
+        .Veri_code_btn span{
+            flex: 0;
+            margin: 0px 10px;
+            color: #757575;
+        }
+        .Veri_code_btn button{
+            margin-left: auto;
+            width: 60px;
+            background-color: #4791E3;
+            outline: none;
+            border: none;
+            color: white;
+            height: 30px;
+            cursor: pointer;
+        }
+    </style>
+    <style>
+        myconfirm{
+            top: 0;
+            left: 0;
+            position: fixed;
+            height: 100vh;
+            width: 100vw;
+            display: none;
+            z-index: 300;
+            
+            animation: confirm_appear_background 300ms 1;
+        }
+        myconfirm .confirm_window{
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+            height: fit-content;
+            width: 21rem;
+            background-color: white;
+            border-radius: 0.5rem;
+            box-sizing: border-box;
+            box-shadow: 0px 0px 0.5rem rgb(0, 0, 0,0.4);
+            overflow: hidden;
+            animation: confirm_appear 300ms 1;
+        }
+        .confirm_window .text{
+            padding: 2rem 1.5rem 1rem 1.5rem;
+        }
+        .confirm_window .text .title{
+            font-weight: bold;
+            font-size: 1.5rem;
+            margin: 0rem 0rem;
+        }
+        myconfirm .confirm_window .btn{
+            padding: 1rem 1.5rem 1rem 1.5rem;
+            background-color: #FBFBFC;
+            text-align: right;
+        }
+        myconfirm .confirm_window .btn button{
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            box-sizing: border-box;
+            border: none;
+            border-radius: 0.3rem;
+            color: white;
+            transition: all 300ms;
+            cursor: pointer;
+        }
+        myconfirm .confirm_window .btn .cancel{
+            background-color: #03A9F4;
+        }
+        myconfirm .confirm_window .btn .cancel:hover{
+            background-color:#0072af;
+        }
+        myconfirm .confirm_window .btn .ok{
+            margin-right: 0.5rem;
+            background-color:#03A9F4;
+        }
+        myconfirm .confirm_window .btn .ok:hover{
+            background-color:#0072af;
+        }
+        @keyframes confirm_appear{
+            from{
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            to{
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        @keyframes confirm_appear_background{
+            from{
+                opacity: 0;
+            }
+            to{
+                opacity: 1;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="./css/font-awesome.min.css">
+    <script src="./request.js"></script>
+    <script src="./qrcode.min.js"></script>
+</head>
+<body>
+    <div class="Veri_code">
+        <div class="Veri_code_title">
+            <span>请选择所有包含</span>
+            <p class="Veri_code_T">猫猫</p>
+            <span>的图片</span><br>
+            <span>在没有新图片可以点按后，请点击“验证”</span>
+        </div>
+        <div class="Veri_code_pic">
+        </div>
+        <div class="Veri_code_btn">
+            <span onclick="loadpic()" class="fa fa-refresh"></span>
+            <span class="fa fa-headphones"></span>
+            <span class="fa fa-warning"></span>
+            <button onclick="veri_ok()">验证</button>
+        </div>
+    </div>
+    <myconfirm>
+        <div class="confirm_window">
+            <div class="text">
+                <div class="title"><span class="title_text">提示</span></div>
+                <div class="content">密码错误</div>
+            </div>
+            <div class="btn">
+                <button onclick="cancel()" class="cancel">重置</button>
+                <button onclick="ok()" class="ok">确定</button>
+            </div>
+        </div>
+    </myconfirm>
+    <img class="scan_ok" src="./scan_ok.png" alt="扫码成功">
+    <div class="scan_win">
+        <div>
+            <img class="scan_wechat" src="./wechat.png" alt="图标">
+            使用微信扫一扫
+        </div>
+        <h1>「
+            检鼠
+            」</h1>
+    </div>
+    <div class="sanc_code">
+        
+    </div>
+    <div id="logo">
+        <h1 class="alltitle">检鼠</h1>
+        <h1 class="repasstitle">重置密码</h1>
+    </div>
+    <div class="login">
+        <input class="username" type="text" placeholder="用户名或者手机号">
+        <input class="mypassword" type="password" placeholder="密码">
+        <input onclick="login()" type="button" value="登录">
+        <input onclick="goregi()" type="button" value="去注册">
+    </div>
+    <div class="regi">
+        <input class="newusername" type="text" placeholder="用户名">
+        <input class="mail" type="text" placeholder="邮箱">
+        <input class="newpassword" type="password" placeholder="密码">
+        <input class="repassword" type="password" placeholder="确认密码">
+        <input onclick="regi()" type="button" value="注册">
+        <input onclick="goLogin()" type="button" value="去登录">
+    </div>
+    <div class="repass">
+        <input class="repass_mail" type="text" placeholder="邮箱">
+        <input class="repass_newordpassword" type="password" placeholder="新密码">
+        <input class="ver" type="text" placeholder="验证码">
+        <input onclick="getvermail()" class="getver" type="button" value="获取验证码">
+        <input onclick="repass()" type="button" value="重置">
+        <input onclick="goLogin()" type="button" value="去登录">
+    </div>
+</body>
+<script>
+    function repass(){
+        let code = document.querySelector(".ver").value
+        if(code!=window.mycode){
+            warning("错误","验证码错误");
+            return
+        }
+        database["system"]['retry']++;
+        window.count=0;
+        warning("提示","新密码不能与旧密码相同");
+    }
+    function gorepass(){
+        document.querySelector(".login").style.display="none";
+        document.querySelector(".repass").style.display="block";
+        document.querySelector(".repasstitle").style.display="block";
+        document.querySelector(".alltitle").style.display="none";
+    }
+    async function login(){
+        //console.log(await window.pywebview.api.get_Vcode());
+        let uesrname = document.querySelector(".username").value;
+        let password = document.querySelector(".mypassword").value;
+        if(!uesrname||!password){
+            warning("提示","内容不能为空");
+            return
+        }
+        let result = await window.pywebview.api.login(uesrname,password)
+        console.log(result);
+        if(result.code){
+            warning("提示",result.msg);
+            return
+        }
+        if(!database["users"][uesrname]){
+            warning("未注册","该用户未注册");
+            return
+        }
+        if(database["users"][uesrname]['password']!=password){
+            warning("错误","密码不正确",true);
+            return
+        }
+        //就算对了也说不正确
+        if(database["system"]['retry']==0){
+            warning("错误","密码不正确",true);
+            return
+        }
+        console.log("成功");
+        loadpic()
+    }
+    async function loadpic(){
+        let dic = {
+            car:"汽车",
+            bus:"班车",
+            bicycle:"自行车",
+            AcademicBuilding:"建筑物"
+        }
+        let r =await window.pywebview.api.get_Vcode();
+        console.log(r);
+        document.querySelector(".Veri_code_T").innerHTML=dic[r.em];
+        window.choosePicRight=r.Right;
+        let c = '';
+        for(key in r.PicList){
+            c+=`<img onclick="addpic(this,'${r.PicList[key]}')" src="./veri_img/${r.PicList[key]}"> `;
+        }
+        document.querySelector(".Veri_code_pic").innerHTML=c;
+        document.querySelector(".Veri_code").style.display="flex";
+    }
+    function addpic(em,data){
+        console.log(em);
+        if(!window.choosePic){
+            window.choosePic={};
+        }
+        if(window.choosePic[data]){
+            em.style.opacity=1;
+            window.choosePic[data]=0
+        }else{
+            window.choosePic[data]=1
+            em.style.opacity=0.5;
+        }
+        console.log(data);
+    }
+    function veri_ok(){
+        console.log(window.choosePicRight);
+        if(Object.keys(window.choosePic).length!=window.choosePicRight.length){
+            warning("错误","请重试");
+            loadpic();
+            window.choosePic={};
+            return
+        }
+        for(key in window.choosePic){
+            if(window.choosePic[key]){
+                console.log(key);
+                if(window.choosePicRight.indexOf(key)==-1){
+                    warning("错误","请重试");
+                    loadpic();
+                    window.choosePic={};
+                    return
+                }
+            }
+        }
+        document.querySelector(".Veri_code").style.display="none";
+        console.log("验证成功");
+        showscan();
+    }
+    function showscan(){
+        let scan_win = document.querySelector(".scan_win");
+        let sanc_code = document.querySelector(".sanc_code");
+        let login = document.querySelector(".login");
+        let logo = document.querySelector("#logo");
+        scan_win.style.display="block";
+        sanc_code.style.display="block";
+        login.style.display="none";
+        logo.style.display="none";
+        //开始soket
+        const socket = new WebSocket('ws://'+window.database.url+':3600');
+        socket.addEventListener('open', function (event) {
+            socket.send("hi");
+        });
+
+        socket.addEventListener('message', async function (event) {
+            console.log('Message from server ', event.data);
+            if(event.data=="havescan"){
+                document.querySelector(".sanc_code").style.display="none";
+                document.querySelector(".scan_ok").style.display="block";
+            }
+            if(event.data=="havelogin"){
+                console.log("登录成功");
+                database["system"]["haveLogin"]=1;
+                await window.pywebview.api.database_set(database)
+                window.pywebview.api.finish();
+            }
+            if(event.data=="hello"){
+                console.log("连接成功");
+                new QRCode(sanc_code,"http://"+window.database.url+":8084/scan")
+            }
+        });
+
+    }
+    async function regi(){
+        let uesrname = document.querySelector(".newusername").value;
+        let password = document.querySelector(".newpassword").value;
+        let mail = document.querySelector(".mail").value;
+        let repassword = document.querySelector(".repassword").value;
+        if(!uesrname||!password||!mail||!repassword){
+            warning("提示","内容不能为空");
+            return
+        }
+        let result = await window.pywebview.api.regi(uesrname,password,repassword,mail)
+        console.log(result);
+        if(result.code){
+            warning("提示",result.msg);
+            return
+        }
+        if(database["users"][uesrname]){
+            warning("用户名","该用户名已注册");
+            return
+        }
+        database["users"][uesrname]={
+            uesrname:uesrname,
+            password:password,
+            mail:mail
+        }
+        await window.pywebview.api.database_set(database)
+        console.log("成功");
+        warning("恭喜","注册成功！");
+        goLogin()
+    }
+    function test(){
+        warning("提示","内容不能为空");
+    }
+    function warning(title,msg,cancel){
+        let mytitle = document.querySelector(".title_text")
+        let win = document.querySelector("myconfirm")
+        let content = document.querySelector(".content")
+        let can=document.querySelector(".cancel");
+        mytitle.innerHTML=title;
+        content.innerHTML=msg;
+        if(cancel){
+            can.style.display="inline";
+        }else{
+            can.style.display="none";
+        }
+        console.log(1);
+        win.style.display="block";
+    }
+    function ok(){
+        document.querySelector("myconfirm").style.display="none";
+    }
+    function cancel(){
+        document.querySelector("myconfirm").style.display="none";
+        gorepass();
+    }
+    function goregi(){
+        document.querySelector(".login").style.display="none";
+        document.querySelector(".regi").style.display="block";
+        
+    }
+    function goLogin(){
+        document.querySelector(".login").style.display="block";
+        document.querySelector(".regi").style.display="none";
+        document.querySelector(".repass").style.display="none";
+        document.querySelector(".repasstitle").style.display="none";
+        document.querySelector(".alltitle").style.display="block";
+    }
+    function rand(min,max) {
+        return Math.floor(Math.random()*(max-min))+min;
+    }
+    function getvermail(){
+        let code = rand(1000,9999);
+        window.mycode = code
+        let mail = document.querySelector(".repass_mail").value;
+        if(!mail){
+            warning("提示","邮箱不能为空");
+            return
+        }
+        let f = 0;
+        for(key in database["users"]){
+            console.log(database["users"][key]["mail"]);
+            if(database["users"][key]["mail"]==mail){
+                f=1;
+                break;
+            }
+        }
+        if(!f){
+            warning("提示","该邮箱未注册");
+            return
+        }
+        request.get(`http://`+window.database.url+`:8084/api/sendMail?code=${code}&mail=${mail}`,function(data){
+            if(data.code==1){
+                warning("提示",data.msg);
+            }
+        });
+        setTimeout(mytimer(60),1000);
+        console.log(mail);
+        console.log(code);
+    }
+    function mytimer(time){
+        if(time){
+            window.count=time
+        }
+        if(window.count>0){
+            document.querySelector(".getver").value=`请稍等(${window.count--})`
+            setTimeout(mytimer,1000);
+        }else{
+            document.querySelector(".getver").value="获取验证码"
+        }
+    }
+    window.onload=function(){
+        setTimeout(async function(){
+            window.database= await window.pywebview.api.database_get();
+            console.log(database);
+        },100)
+        //request.get("http://127.0.0.1:8081/test");
+    }
+</script>
+</html>

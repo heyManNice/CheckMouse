@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body{
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+        }
+        img{
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+    
+</head>
+<body>
+    <img src="./ok.png">
+    <audio autoplay src="./bgm.mp3"></audio>
+</body>
+<script>
+    window.onload=function(){
+        let ad = document.querySelector(".admp4");
+        //ad.play()
+        ad.onended=function(){
+            window.pywebview.api.finish();
+        }
+    }
+</script>
+</html>
