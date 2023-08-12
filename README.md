@@ -32,11 +32,11 @@ mymailkey='xxxxxxxxxxx';//IMAP/SMTP服务授权码
 你可以看到客户端的文件夹关系是这样的  
 ├─module  
 └─source  
-    ├─css  
-    ├─fonts  
-    ├─less  
-    ├─scss  
-    └─veri_img  
+&emsp;&emsp;├─css  
+&emsp;&emsp;├─fonts  
+&emsp;&emsp;├─less  
+&emsp;&emsp;├─scss  
+&emsp;&emsp;└─veri_img  
 ### 1.2.2、环境
 你需要有python3环境并且安装该项目需要的模块  
 要求的模块  
